@@ -19,7 +19,7 @@
     },
     "instance_type": "t2.medium",
     "ssh_username": "ubuntu",
-    "ami_name": "vlab-springboot-fsd-{{user `image-stage`}}"
+    "ami_name": "vlab-springboot-fsd-{{isotime | clean_image_name}}"
   }],
   "provisioners": [{
     "type": "ansible",
