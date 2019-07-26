@@ -26,18 +26,27 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install ansible roles
-          command: ansible-galaxy install -r roles.yml -p roles
+          name: Install packer
+          command: |
+            apt update
+            apt install wget unzip
+            wget https://releases.hashicorp.com/packer/1.4.2/packer_1.4.2_linux_amd64.zip
+            unzip packer_1.4.2_linux_amd64.zip
+      # - run:
+      #     name: Install ansible roles
+      #     command: ansible-galaxy install -r roles.yml -p roles
       - run:
           name: Generate Image
-          command: packer
+          command: ./packer build template.json
 
-# workflow:
-#   version: 2
-#   build-and-release:
-#     jobs:
-#       - build
-#       - release:
-#           filters:
-#             branches:
-#               only: master
+workflow:
+  version: 2
+  build-and-release:
+    jobs:
+      - build
+      - release:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
