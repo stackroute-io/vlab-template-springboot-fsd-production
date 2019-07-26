@@ -35,14 +35,17 @@ jobs:
             unzip packer_1.4.2_linux_amd64.zip
             chmod -R 555 .
             mv packer /usr/local/bin/packer
-            su -c "echo $PATH" -s /bin/bash ubuntu
+            cd ..
+            mv project /home/ubuntu/project -v
+            su -m -c "echo $PATH" -s /bin/bash ubuntu
       - run:
           name: Install ansible roles
-          command: ansible-galaxy install -r roles.yml -p roles
+          command: |
+            su -c "cd /home/ubuntu/project && ansible-galaxy install -r roles.yml -p roles"
       - run:
           name: Generate Image
           command: |
-            su -c "packer build template.json" -s /bin/bash ubuntu
+            su -c "cd /home/ubuntu/project && packer build template.json" -s /bin/bash ubuntu
 
 workflows:
   version: 2
