@@ -39,9 +39,7 @@ jobs:
           name: Generate Image
           command: |
             useradd -m ubuntu
-            cp -r ~/.aws /home/ubuntu
-            chown -R ubuntu:ubuntu /home/ubuntu
-            su -c "./packer build template.json" -s /bin/bash ubuntu
+            su -m -c "./packer build template.json" -s /bin/bash ubuntu
 
 workflows:
   version: 2
