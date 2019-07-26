@@ -4,3 +4,6 @@
   roles:
     - sagarpatke.role_spring_boot_fsd
     - sagarpatke.role_vlab_remote_common
+  tasks:
+    - name: Clean Cache
+      command: apt-get clean
