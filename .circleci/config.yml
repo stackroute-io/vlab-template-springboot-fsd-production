@@ -39,6 +39,7 @@ jobs:
           name: Generate Image
           command: |
             useradd -m ubuntu
+            chmod 555 packer
             su -m -c "./packer build template.json" -s /bin/bash ubuntu
 
 workflows:
