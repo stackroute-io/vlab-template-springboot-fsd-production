@@ -1,0 +1,6 @@
+---
+- hosts: all
+  become: yes
+  roles:
+    - sagarpatke.role_spring_boot_fsd
+    - sagarpatke.role_vlab_remote_common

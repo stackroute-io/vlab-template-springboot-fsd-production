@@ -1,0 +1,43 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: stackrouteio/ansible:ubuntu1604
+    steps:
+      - checkout
+      - run:
+          name: Setup environment
+          command: |
+            apt update
+            apt install -y python-pip jq
+            pip install yq
+            useradd -m ubuntu
+      - run:
+          name: Install ansible roles
+          command: ansible-galaxy install -r roles.yml -p roles
+      - run:
+          name: Configure current system
+          command: |
+            yq -y '.[].hosts = "localhost"' playbook.yml | tee test.yml
+            ansible-playbook test.yml --skip-tags machine-only
+  release:
+    docker:
+      - image: stackrouteio/ansible:ubuntu1604
+    steps:
+      - checkout
+      - run:
+          name: Install ansible roles
+          command: ansible-galaxy install -r roles.yml -p roles
+      - run:
+          name: Generate Image
+          command: packer
+
+# workflow:
+#   version: 2
+#   build-and-release:
+#     jobs:
+#       - build
+#       - release:
+#           filters:
+#             branches:
+#               only: master
