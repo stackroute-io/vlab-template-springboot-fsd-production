@@ -11,7 +11,6 @@ Vagrant.configure("2") do |config|
   config.vm.network :private_network, ip: '192.168.99.99'
   config.vm.provision :ansible do |ansible|
     ansible.playbook = 'playbook.yml'
-    ansible.skip_tags = 'machine-only'
   end
 
   config.vm.provider :virtualbox do |v|
