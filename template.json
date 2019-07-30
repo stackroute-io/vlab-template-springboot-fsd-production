@@ -18,6 +18,8 @@
       "most_recent": true
     },
     "instance_type": "t2.medium",
+    "ami_regions": "us-east-1",
+    "ami_users": "956247727412",
     "enable_t2_unlimited": true,
     "ssh_username": "ubuntu",
     "ami_block_device_mappings": [{
